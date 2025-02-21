@@ -52,19 +52,49 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
+        'mainnet': {
+            eid: EndpointId.ETHEREUM_V2_MAINNET,
+            url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        'base-mainnet': {
+            eid: EndpointId.BASE_V2_MAINNET,
+            url: `https://base-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        'arbitrum-mainnet': {
+            eid: EndpointId.ARBITRUM_V2_MAINNET,
+            url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        'hyperliquid-mainnet': {
+            eid: EndpointId.HYPERLIQUID_V2_MAINNET,
+            url: "https://rpc.hyperliquid-mainnet.xyz/evm",
+            accounts,
+        },
+        'xdc': {
+            eid: EndpointId.XDC_V2_MAINNET,
+            url: `https://rpc.primenumbers.xyz`,
+            accounts,
+        },
         'sepolia-testnet': {
             eid: EndpointId.SEPOLIA_V2_TESTNET,
-            url: process.env.RPC_URL_SEPOLIA || 'https://rpc.sepolia.org/',
+            url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'avalanche-testnet': {
-            eid: EndpointId.AVALANCHE_V2_TESTNET,
-            url: process.env.RPC_URL_FUJI || 'https://rpc.ankr.com/avalanche_fuji',
+        'base-sepolia-testnet': {
+            eid: EndpointId.BASESEP_V2_TESTNET,
+            url: `https://base-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },  
+        'arbitrum-sepolia-testnet': {
+            eid: EndpointId.ARBSEP_V2_TESTNET,
+            url: `https://arbitrum-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'amoy-testnet': {
-            eid: EndpointId.AMOY_V2_TESTNET,
-            url: process.env.RPC_URL_AMOY || 'https://polygon-amoy-bor-rpc.publicnode.com',
+        'hyperliquid-testnet': {
+            eid: EndpointId.HYPERLIQUID_V2_TESTNET,
+            url: "https://rpc.hyperliquid-testnet.xyz/evm",
             accounts,
         },
         hardhat: {
