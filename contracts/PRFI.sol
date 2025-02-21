@@ -10,5 +10,7 @@ contract PRFI is OFT {
         string memory _symbol,
         address _lzEndpoint,
         address _delegate
-    ) OFT(_name, _symbol, _lzEndpoint, _delegate) Ownable(_delegate) {}
+    ) OFT(_name, _symbol, _lzEndpoint, _delegate) Ownable(_delegate) {
+
+    }
 }

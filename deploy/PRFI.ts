@@ -22,7 +22,7 @@ const deploy: DeployFunction = async (hre) => {
     const endpointV2Deployment = await hre.deployments.get('EndpointV2')
    
     const factoryAddr = "0xAC2A150065090a58C1a325341d66A28cA1e24289";
-    const saltHex = ethers.utils.id("1234");
+    const saltHex = ethers.utils.id("12346");
     const initCode = bytecode + encoder(["string", "string", "address", "address"], ["PRFI", "PRFI", endpointV2Deployment.address, deployer]);
 
     const create2Addr = create2Address(factoryAddr, saltHex, initCode);
@@ -34,10 +34,10 @@ const deploy: DeployFunction = async (hre) => {
 
     const prfiDeploy = await factory.deploy(initCode, saltHex);
     const txReceipt = await prfiDeploy.wait();
-    console.log("Deployed to:", txReceipt);
+    //console.log("Deployed to:", txReceipt);
 
     
-    console.log(`Deployed contract: ${contractName}, network: ${hre.network.name}, address: ${txReceipt.events[0].args[0]}`)
+    console.log(`Deployed contract: ${contractName}, network: ${hre.network.name}, address: ${txReceipt.events[0].address}, tx: ${txReceipt.transactionHash}`)
 }
 
 deploy.tags = [contractName]
