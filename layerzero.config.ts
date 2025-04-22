@@ -47,18 +47,10 @@ const XDCContract: OmniPointHardhat = {
     contractName: 'PRFI',
 }
 
-
-
 const config: OAppOmniGraphHardhat = {
     contracts: [
         {
-            contract: ethereumContract,
-        },
-        {
             contract: sepoliaContract,
-        },
-        {
-            contract: BaseContract,
         },
         {
             contract: BaseSepoliaContract,
@@ -67,104 +59,10 @@ const config: OAppOmniGraphHardhat = {
             contract: ArbitrumSepoliaContract,
         },
         {
-            contract: ArbitrumContract,
-        },
-        {
-            contract: hyperliquidContract,
-        },
-        {
             contract: HyperliquidTestnetContract,
-        },
-        {
-            contract: XDCContract,
         },
     ],
     connections: [
-        // Ethereum
-        {
-            from: ethereumContract,
-            to: BaseContract,
-        },
-        {
-            from: ethereumContract,
-            to: ArbitrumContract,
-        },
-        {
-            from: ethereumContract,
-            to: hyperliquidContract,
-        },
-        {
-            from: ethereumContract,
-            to: XDCContract,
-        },
-        // Arbitrum
-        {
-            from: ArbitrumContract,
-            to: ethereumContract,
-        },
-        {
-            from: ArbitrumContract,
-            to: BaseContract,
-        },
-        {
-            from: ArbitrumContract,
-            to: hyperliquidContract,
-        },
-        {
-            from: ArbitrumContract,
-            to: XDCContract,
-        },
-        // Hyperliquid
-        {
-            from: hyperliquidContract,
-            to: ethereumContract,
-        },
-        {
-            from: hyperliquidContract,
-            to: BaseContract,
-        },
-        {
-            from: hyperliquidContract,
-            to: ArbitrumContract,
-        },
-        {
-            from: hyperliquidContract,
-            to: XDCContract,
-        },
-        // XDC
-        {
-            from: XDCContract,
-            to: ethereumContract,
-        },
-        {
-            from: XDCContract,
-            to: BaseContract,
-        },
-        {
-            from: XDCContract,
-            to: ArbitrumContract,
-        },
-        {
-            from: XDCContract,
-            to: hyperliquidContract,
-        },
-        // Base
-        {
-            from: BaseContract,
-            to: ethereumContract,
-        },
-        {
-            from: BaseContract,
-            to: ArbitrumContract,
-        },
-        {
-            from: BaseContract,
-            to: hyperliquidContract,
-        },
-        {
-            from: BaseContract,
-            to: XDCContract,
-        },
         //Tesnets Networks
         // Sepolia
         {
@@ -204,7 +102,7 @@ const config: OAppOmniGraphHardhat = {
         {
             from: HyperliquidTestnetContract,
             to: sepoliaContract,
-        }
+        },
     ],
 }
 

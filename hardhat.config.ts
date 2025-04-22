@@ -52,49 +52,24 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
-        'mainnet': {
-            eid: EndpointId.ETHEREUM_V2_MAINNET,
-            url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-            accounts,
-        },
-        'base-mainnet': {
-            eid: EndpointId.BASE_V2_MAINNET,
-            url: `https://base-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-            accounts,
-        },
-        'arbitrum-mainnet': {
-            eid: EndpointId.ARBITRUM_V2_MAINNET,
-            url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-            accounts,
-        },
-        'hyperliquid-mainnet': {
-            eid: EndpointId.HYPERLIQUID_V2_MAINNET,
-            url: "https://rpc.hyperliquid-mainnet.xyz/evm",
-            accounts,
-        },
-        'xdc': {
-            eid: EndpointId.XDC_V2_MAINNET,
-            url: `https://rpc.primenumbers.xyz`,
-            accounts,
-        },
         'sepolia-testnet': {
             eid: EndpointId.SEPOLIA_V2_TESTNET,
             url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'base-sepolia-testnet': {
+        'base-sepolia': {
             eid: EndpointId.BASESEP_V2_TESTNET,
             url: `https://base-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
-        },  
-        'arbitrum-sepolia-testnet': {
+        },
+        'arbitrum-sepolia': {
             eid: EndpointId.ARBSEP_V2_TESTNET,
             url: `https://arbitrum-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
         'hyperliquid-testnet': {
             eid: EndpointId.HYPERLIQUID_V2_TESTNET,
-            url: "https://rpc.hyperliquid-testnet.xyz/evm",
+            url: 'https://rpc.hyperliquid-testnet.xyz/evm',
             accounts,
         },
         hardhat: {

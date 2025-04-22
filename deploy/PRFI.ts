@@ -21,7 +21,7 @@ const deploy: DeployFunction = async (hre) => {
     console.log(`Deployer: ${deployer}`)
 
     const endpointV2Deployment = await hre.deployments.get('EndpointV2')
-    const factoryAddr = '0x8424F59a7D6f6270E44F760982ddBAC2c3d7cb81'
+    const factoryAddr = '0x8B32257Bac967FF1Ad3454D65998ba50d4eD3190'
 
     const saltHex = ethers.utils.id('742632')
     const initCode = bytecode + encoder(['string', 'string', 'address', 'address'], ['PRFI', 'PRFI', endpointV2Deployment.address, deployer])
