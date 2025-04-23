@@ -49,19 +49,69 @@ const config: HardhatUserConfig = {
                         enabled: true,
                         runs: 200,
                     },
+                    evmVersion: 'paris',
                 },
             },
         ],
     },
     deterministicDeployment: {
-        'sepolia-testnet': {
-            factory: '0x8B32257Bac967FF1Ad3454D65998ba50d4eD3190',
-            deployer: '0x0130c9E9c49a59a269D1Ca808B3F06e2e442082B',
+        hyperliquid: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        mainnet: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        base: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        arbitrum: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        xdc: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
             funding: '10000000',
             signedTx: '0x',
         },
     },
     networks: {
+        mainnet: {
+            eid: EndpointId.ETHEREUM_V2_MAINNET,
+            url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        base: {
+            eid: EndpointId.BASE_V2_MAINNET,
+            url: `https://base-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        arbitrum: {
+            eid: EndpointId.ARBITRUM_V2_MAINNET,
+            url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+            accounts,
+        },
+        hyperliquid: {
+            eid: EndpointId.HYPERLIQUID_V2_MAINNET,
+            url: 'https://rpc.hyperliquid.xyz/evm',
+            accounts,
+        },
+        xdc: {
+            eid: EndpointId.XDC_V2_MAINNET,
+            url: 'https://rpc.primenumbers.xyz',
+            accounts,
+        },
         'sepolia-testnet': {
             eid: EndpointId.SEPOLIA_V2_TESTNET,
             url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
