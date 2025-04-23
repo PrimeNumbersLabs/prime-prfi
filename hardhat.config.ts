@@ -5,6 +5,8 @@
 // - Fill in the environment variables
 import 'dotenv/config'
 
+import './scripts/SendOFT'
+
 import 'hardhat-deploy'
 import 'hardhat-contract-sizer'
 import '@nomiclabs/hardhat-ethers'
@@ -50,6 +52,14 @@ const config: HardhatUserConfig = {
                 },
             },
         ],
+    },
+    deterministicDeployment: {
+        'sepolia-testnet': {
+            factory: '0x8B32257Bac967FF1Ad3454D65998ba50d4eD3190',
+            deployer: '0x0130c9E9c49a59a269D1Ca808B3F06e2e442082B',
+            funding: '10000000',
+            signedTx: '0x',
+        },
     },
     networks: {
         'sepolia-testnet': {
