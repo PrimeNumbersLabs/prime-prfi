@@ -16,7 +16,7 @@ contract PRFI is OFT {
         _mint(to, amount);
     }
 
-    function burn(address from, uint256 amount) public {
-        _burn(from, amount);
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
     }
 }
