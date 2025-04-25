@@ -25,7 +25,7 @@ describe('PRFI Test', function () {
         // Contract factory for our tested contract
         //
         // We are using a derived contract that exposes a mint() function for testing purposes
-        PRFI = await ethers.getContractFactory('PRFIMock')
+        PRFI = await ethers.getContractFactory('PRFI')
 
         // Fetching the first three signers (accounts) from Hardhat's local Ethereum network
         const signers = await ethers.getSigners()
@@ -99,5 +99,184 @@ describe('PRFI Test', function () {
         // Asserting that the final balances are as expected after the send operation
         expect(finalBalanceA).eql(initialAmount.sub(tokensToSend))
         expect(finalBalanceB).eql(tokensToSend)
+    })
+
+    it('should mint tokens', async function () {
+        // Minting an initial amount of tokens to ownerA's address in the PRFIA contract
+        const initialAmount = ethers.utils.parseEther('100')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        // Fetching the final token balance of ownerA
+        const finalBalance = await PRFIA.balanceOf(ownerA.address)
+
+        // Asserting that the final balance is as expected after the mint operation
+        expect(finalBalance).eql(initialAmount)
+    })
+
+    it('do not allow minting by non-owner', async function () {
+        // Minting an initial amount of tokens to ownerA's address in the PRFIA contract
+        const initialAmount = ethers.utils.parseEther('100')
+        try {
+            await PRFIA.connect(ownerB).mint(ownerB.address, initialAmount)
+            // If we reach here, the test should fail
+            expect.fail('Transaction should have reverted')
+        } catch (error) {
+            // Transaction reverted as expected
+        }
+    })
+
+    it('should transfer tokens', async function () {
+        // Minting an initial amount of tokens to ownerA's address in the PRFIA contract
+        const initialAmount = ethers.utils.parseEther('100')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        // Defining the amount of tokens to transfer
+        const tokensToTransfer = ethers.utils.parseEther('1')
+
+        // Transferring tokens from ownerA to ownerB
+        await PRFIA.transfer(ownerB.address, tokensToTransfer)
+
+        // Fetching the final token balances of ownerA and ownerB
+        const finalBalanceA = await PRFIA.balanceOf(ownerA.address)
+        const finalBalanceB = await PRFIA.balanceOf(ownerB.address)
+
+        // Asserting that the final balances are as expected after the transfer
+        expect(finalBalanceA).eql(initialAmount.sub(tokensToTransfer))
+        expect(finalBalanceB).eql(tokensToTransfer)
+    })
+
+    it('should burn tokens', async function () {
+        // Minting an initial amount of tokens to ownerA's address in the PRFIA contract
+        const initialAmount = ethers.utils.parseEther('100')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        // Defining the amount of tokens to burn
+        const tokensToBurn = ethers.utils.parseEther('1')
+
+        // Burning tokens from ownerA's address
+        await PRFIA.burn(ownerA.address, tokensToBurn)
+
+        // Fetching the final token balance of ownerA
+        const finalBalance = await PRFIA.balanceOf(ownerA.address)
+
+        // Asserting that the final balance is as expected after the burn operation
+        expect(finalBalance).eql(initialAmount.sub(tokensToBurn))
+    })
+
+    it('should approve spending of tokens', async function () {
+        const amountToApprove = ethers.utils.parseEther('10')
+
+        // Approve ownerB to spend tokens on behalf of ownerA
+        await PRFIA.connect(ownerA).approve(ownerB.address, amountToApprove)
+
+        // Check the allowance
+        const allowance = await PRFIA.allowance(ownerA.address, ownerB.address)
+
+        expect(allowance).eql(amountToApprove)
+    })
+
+    it('should update allowance when approving tokens', async function () {
+        const amountToApprove = ethers.utils.parseEther('5')
+
+        // First approval
+        await PRFIA.connect(ownerA).approve(ownerB.address, amountToApprove)
+        const initialAllowance = await PRFIA.allowance(ownerA.address, ownerB.address)
+        expect(initialAllowance).eql(amountToApprove)
+
+        // Change approval amount
+        const newAmount = ethers.utils.parseEther('10')
+        await PRFIA.connect(ownerA).approve(ownerB.address, newAmount)
+
+        // Check updated allowance
+        const updatedAllowance = await PRFIA.allowance(ownerA.address, ownerB.address)
+        expect(updatedAllowance).eql(newAmount)
+    })
+
+    it('should allow transferFrom after approval', async function () {
+        // Mint tokens to ownerA
+        const initialAmount = ethers.utils.parseEther('100')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        // Amount to be transferred
+        const transferAmount = ethers.utils.parseEther('15')
+
+        // ownerA approves ownerB to spend tokens
+        await PRFIA.connect(ownerA).approve(ownerB.address, transferAmount)
+
+        // ownerB transfers tokens from ownerA to themselves
+        await PRFIA.connect(ownerB).transferFrom(ownerA.address, ownerB.address, transferAmount)
+
+        // Check balances after transfer
+        const ownerABalance = await PRFIA.balanceOf(ownerA.address)
+        const ownerBBalance = await PRFIA.balanceOf(ownerB.address)
+
+        expect(ownerABalance).eql(initialAmount.sub(transferAmount))
+        expect(ownerBBalance).eql(transferAmount)
+
+        // Check that allowance was reduced
+        const remainingAllowance = await PRFIA.allowance(ownerA.address, ownerB.address)
+        expect(remainingAllowance).eql(ethers.constants.Zero)
+    })
+
+    it('should transfer tokens correctly', async function () {
+        // Mint tokens to ownerA
+        const initialAmount = ethers.utils.parseEther('50')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        const transferAmount = ethers.utils.parseEther('25')
+
+        // Transfer tokens
+        await PRFIA.connect(ownerA).transfer(ownerB.address, transferAmount)
+
+        // Verify balances after transfer
+        const ownerABalance = await PRFIA.balanceOf(ownerA.address)
+        const ownerBBalance = await PRFIA.balanceOf(ownerB.address)
+
+        expect(ownerABalance).eql(initialAmount.sub(transferAmount))
+        expect(ownerBBalance).eql(transferAmount)
+    })
+
+    it('should not allow transferFrom more than approved amount', async function () {
+        // Mint tokens to ownerA
+        const initialAmount = ethers.utils.parseEther('100')
+        await PRFIA.mint(ownerA.address, initialAmount)
+
+        // Amount to be approved
+        const approveAmount = ethers.utils.parseEther('10')
+
+        // Amount to attempt to transfer (more than approved)
+        const transferAmount = ethers.utils.parseEther('20')
+
+        // ownerA approves ownerB to spend tokens
+        await PRFIA.connect(ownerA).approve(ownerB.address, approveAmount)
+
+        // Attempt to transfer more than approved should fail
+        try {
+            await PRFIA.connect(ownerB).transferFrom(ownerA.address, ownerB.address, transferAmount)
+            // If we reach here, the test should fail
+            expect.fail('Transaction should have reverted')
+        } catch (error) {
+            // Transaction reverted as expected
+        }
+
+        // Balances should remain unchanged
+        const ownerABalance = await PRFIA.balanceOf(ownerA.address)
+        const ownerBBalance = await PRFIA.balanceOf(ownerB.address)
+
+        expect(ownerABalance).eql(initialAmount)
+        expect(ownerBBalance).eql(ethers.constants.Zero)
+    })
+
+    it('should return correct token name and symbol', async function () {
+        const name = await PRFIA.name()
+        const symbol = await PRFIA.symbol()
+        expect(name).eql('aOFT')
+        expect(symbol).eql('aOFT')
+    })
+
+    it('should return correct decimals', async function () {
+        const decimals = await PRFIA.decimals()
+        // ERC20 standard typically uses 18 decimals
+        expect(decimals).eql(18)
     })
 })

@@ -5,6 +5,8 @@
 // - Fill in the environment variables
 import 'dotenv/config'
 
+import './scripts/SendOFT'
+
 import 'hardhat-deploy'
 import 'hardhat-contract-sizer'
 import '@nomiclabs/hardhat-ethers'
@@ -47,34 +49,67 @@ const config: HardhatUserConfig = {
                         enabled: true,
                         runs: 200,
                     },
+                    evmVersion: 'paris',
                 },
             },
         ],
     },
+    deterministicDeployment: {
+        hyperliquid: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        mainnet: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        base: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        arbitrum: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+        xdc: {
+            factory: '0x2077A9A5B371F27e5C4fd20AAe4C718dd360E6Fc',
+            deployer: '0x5498E44649a8F8C31f13eE5E9DCB0C0Dd4c883B7',
+            funding: '10000000',
+            signedTx: '0x',
+        },
+    },
     networks: {
-        'mainnet': {
+        mainnet: {
             eid: EndpointId.ETHEREUM_V2_MAINNET,
             url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'base-mainnet': {
+        base: {
             eid: EndpointId.BASE_V2_MAINNET,
             url: `https://base-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'arbitrum-mainnet': {
+        arbitrum: {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
             url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'hyperliquid-mainnet': {
+        hyperliquid: {
             eid: EndpointId.HYPERLIQUID_V2_MAINNET,
-            url: "https://rpc.hyperliquid-mainnet.xyz/evm",
+            url: 'https://rpc.hyperliquid.xyz/evm',
             accounts,
         },
-        'xdc': {
+        xdc: {
             eid: EndpointId.XDC_V2_MAINNET,
-            url: `https://rpc.primenumbers.xyz`,
+            url: 'https://rpc.primenumbers.xyz',
             accounts,
         },
         'sepolia-testnet': {
@@ -82,19 +117,19 @@ const config: HardhatUserConfig = {
             url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
-        'base-sepolia-testnet': {
+        'base-sepolia': {
             eid: EndpointId.BASESEP_V2_TESTNET,
             url: `https://base-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
-        },  
-        'arbitrum-sepolia-testnet': {
+        },
+        'arbitrum-sepolia': {
             eid: EndpointId.ARBSEP_V2_TESTNET,
             url: `https://arbitrum-sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
             accounts,
         },
         'hyperliquid-testnet': {
             eid: EndpointId.HYPERLIQUID_V2_TESTNET,
-            url: "https://rpc.hyperliquid-testnet.xyz/evm",
+            url: 'https://rpc.hyperliquid-testnet.xyz/evm',
             accounts,
         },
         hardhat: {
